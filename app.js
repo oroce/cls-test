@@ -5,6 +5,8 @@ var model = require('./model');
 var clsmw  = require('cls-middleware');
 var ns = cls.createNamespace('transaction');
 var uuid = require('uuid');
+var inspect = require('util').inspect;
+
 app.use(clsmw(ns));
 
 app.use(function pre(req, res, next) {
@@ -30,7 +32,9 @@ app.get('/', function(req, res, next) {
 
 
 app.use(function post(req, res, next) {
-	console.log(cls.getNamespace('transaction').active);
+	console.log(inspect(cls.getNamespace('transaction').active, {
+		depth: 4
+	}));
 });
 
 require('http').createServer(app).listen(8000, console.log.bind(console));
